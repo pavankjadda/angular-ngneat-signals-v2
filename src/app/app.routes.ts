@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { AddEmployeeComponent } from './home/add-employee/add-employee.component';
-import { DeleteEmployeeComponent } from './home/delete-employee/delete-employee.component';
+import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
+import { DeleteEmployeeComponent } from './employee/delete-employee/delete-employee.component';
 
 export const routes: Routes = [
 	{

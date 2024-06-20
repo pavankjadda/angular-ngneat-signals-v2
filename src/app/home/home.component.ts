@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { AllEmployeesComponent } from './all-employees/all-employees.component';
+import { AllEmployeesComponent } from '../employee/all-employees/all-employees.component';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -19,6 +19,6 @@ import { MatDividerModule } from '@angular/material/divider';
 				<app-all-employees />
 			</mat-card-content>
 		</mat-card>
-	`
+	`,
 })
 export class HomeComponent {}

@@ -32,6 +32,7 @@
     "@angular-devkit/build-angular": "^17.0.3",
     "@angular/cli": "^17.0.3",
     "@angular/compiler-cli": "^17.0.4",
+    "@tanstack/query-devtools": "^5.37.1",
     "@ngneat/query-devtools": "^2.0.0-beta.0",
     "@types/jest": "latest",
     "jest": "latest",
