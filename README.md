@@ -21,7 +21,7 @@ A simple demo to show how to use the Angular NgNeat Query v2 library
     ```bash
     npm run start
     ```
-5. Open the browser and navigate to `http://localhost:4200`
+5. Open the browser and navigate to `http://localhost:4300` to see the application
 
 6. You can create new employee by clicking on the `Add Employee` button and fill the form. And you can
    update the employee by clicking on the `Edit` button. All the changes will be saved in the `db.json` file.
