@@ -1,5 +1,12 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+	PreloadAllModules,
+	provideRouter,
+	withComponentInputBinding,
+	withInMemoryScrolling,
+	withPreloading,
+	withRouterConfig,
+} from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
@@ -11,6 +18,18 @@ export const appConfig: ApplicationConfig = {
 		provideRouter(routes),
 		provideHttpClient(),
 		provideAnimations(),
+		provideRouter(
+			routes,
+			withRouterConfig({
+				onSameUrlNavigation: 'reload',
+			}),
+			withInMemoryScrolling(),
+			withPreloading(PreloadAllModules),
+			withComponentInputBinding(),
+			withRouterConfig({
+				paramsInheritanceStrategy: 'always',
+			})
+		),
 		provideQueryClientOptions({
 			defaultOptions: {
 				queries: {

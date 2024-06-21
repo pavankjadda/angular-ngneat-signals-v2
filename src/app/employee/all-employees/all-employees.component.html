@@ -13,8 +13,8 @@
 		</mat-form-field>
 	</div>
 
-	@if (loadingState().isLoading){
-	<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+	@if (employeesResult().isLoading) {
+		<mat-progress-bar mode="indeterminate"></mat-progress-bar>
 	}
 
 	<!-- Employees Table -->
@@ -78,13 +78,19 @@
 			</td>
 		</ng-container>
 
+		<!-- Actions Column -->
+		<ng-container matColumnDef="actions">
+			<th *matHeaderCellDef mat-header-cell mat-sort-header="actions">Actions</th>
+			<td *matCellDef="let element" mat-cell>
+				<a [routerLink]="['/employee/edit', element.id]" color="primary" mat-raised-button>Edit</a>
+			</td>
+		</ng-container>
 		<tr *matHeaderRowDef="columns" mat-header-row></tr>
 		<tr *matRowDef="let row; columns: columns" mat-row></tr>
 	</table>
 	<mat-paginator #paginator="matPaginator" [pageSizeOptions]="[10, 20, 50, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
 
 	<div>
-		<a class="btn btn-primary" routerLink="/add_employee" style="margin: 1rem">Add Employee</a>
-		<a class="btn btn-primary" routerLink="/delete_employee" style="margin: 1rem">Delete Employee</a>
+		<a class="btn btn-primary" routerLink="/employee/add" style="margin: 1rem">Add Employee</a>
 	</div>
 </div>

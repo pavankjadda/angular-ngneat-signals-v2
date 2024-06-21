@@ -16,31 +16,28 @@ export class EmployeeService {
 		return this.useQuery({
 			queryKey: ['employees'],
 			queryFn: () => this.httpClient.get<Employee[]>('http://localhost:3000/employees'),
-		}).result$;
+		}).result;
 	}
 
 	createEmployee(employee: Employee) {
-		return this.useQuery({
-			queryKey: ['employees'],
-			queryFn: () =>
-				this.httpClient.post<Employee>('http://localhost:3000/employees', employee).pipe(
-					tap((newEmployee) =>
-						this.queryClient.setQueriesData({ queryKey: ['employees', employee.id] }, (oldEmployees: Employee[] | undefined) => {
-							console.log('oldEmployees', oldEmployees);
-							if (oldEmployees) {
-								return [...oldEmployees, newEmployee];
-							}
-							return [newEmployee];
-						})
-					)
-				),
-		}).result$;
+		return this.httpClient.post<Employee>('http://localhost:3000/employees', employee).pipe(
+			tap((newEmployee) =>
+				// @ts-ignore
+				this.queryClient.setQueryData(['employees'], (old) => [...old, newEmployee])
+			)
+		);
 	}
 
 	updateEmployee(employee: Employee) {
-		return this.useQuery({
-			queryKey: ['employees'],
-			queryFn: () => this.httpClient.get<Employee[]>('http://localhost:3000/employees'),
-		}).result$;
+		return this.httpClient.put<Employee>(`http://localhost:3000/employees/${employee.id}`, employee).pipe(
+			tap((newEmployee) =>
+				this.queryClient.setQueriesData(
+					{
+						queryKey: ['employees'],
+					},
+					(old: Employee[] | undefined) => old?.map((e) => (e.id === newEmployee.id ? newEmployee : e))
+				)
+			)
+		);
 	}
 }

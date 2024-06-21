@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from './employee/delete-employee/delete-employee.component';
+import { AllEmployeesComponent } from './employee/all-employees/all-employees.component';
+import { EditEmployeeComponent } from './employee/edit-employee/edit-employee.component';
 
 export const routes: Routes = [
 	{
@@ -13,11 +15,19 @@ export const routes: Routes = [
 		component: HomeComponent,
 	},
 	{
-		path: 'add_employee',
+		path: 'employee',
+		component: AllEmployeesComponent,
+	},
+	{
+		path: 'employee/add',
 		component: AddEmployeeComponent,
 	},
 	{
-		path: 'delete_employee',
+		path: 'employee/edit/:id',
+		component: EditEmployeeComponent,
+	},
+	{
+		path: 'employee/delete/:id',
 		component: DeleteEmployeeComponent,
 	},
 ];

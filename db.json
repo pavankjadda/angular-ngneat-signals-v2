@@ -39,46 +39,6 @@
       "email": "jreese@example.com",
       "phone": "123-456-7890",
       "age": 28
-    },
-    {
-      "id": 540143,
-      "firstName": "ss",
-      "lastName": "sss",
-      "email": "",
-      "phone": "",
-      "age": null
-    },
-    {
-      "id": 540143,
-      "firstName": "ss",
-      "lastName": "sss",
-      "email": "",
-      "phone": "",
-      "age": null
-    },
-    {
-      "id": 540143,
-      "firstName": "ss",
-      "lastName": "sss",
-      "email": "",
-      "phone": "",
-      "age": null
-    },
-    {
-      "id": 540143,
-      "firstName": "ss",
-      "lastName": "sss",
-      "email": "",
-      "phone": "",
-      "age": null
-    },
-    {
-      "id": 540143,
-      "firstName": "ss",
-      "lastName": "sss",
-      "email": "",
-      "phone": "",
-      "age": null
     }
   ]
 }
