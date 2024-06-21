@@ -18,7 +18,6 @@ import { Router } from '@angular/router';
 })
 export class EditEmployeeComponent {
 	@Input({ transform: numberAttribute }) id = 0;
-
 	fb = inject(FormBuilder);
 	employeeService = inject(EmployeeService);
 	router = inject(Router);
@@ -44,14 +43,6 @@ export class EditEmployeeComponent {
 	updateEmployee() {
 		if (this.formGroup.invalid) return;
 		const employee = this.formGroup.value as Employee;
-
-		this.employeeService.updateEmployee(employee).subscribe({
-			next: (_result) => {
-				this.router.navigate(['/employee']);
-			},
-			error: (error) => {
-				console.error(error);
-			},
-		});
+		this.employeeService.updateEmployee().mutate(employee);
 	}
 }

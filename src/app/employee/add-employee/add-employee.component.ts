@@ -26,20 +26,15 @@ export class AddEmployeeComponent {
 		lastName: this.fb.control(''),
 		email: this.fb.control(''),
 		phone: this.fb.control(''),
-		age: this.fb.control(null),
+		age: this.fb.control<number | null>(null),
 	});
 
 	createEmployee() {
 		if (this.formGroup.invalid) return;
-		// @ts-ignore
-		const employee: Employee = this.formGroup.value;
-
-		this.employeeService.createEmployee(employee).subscribe({
-			next: (_result) => {
-				this.router.navigate(['/employee']);
-			},
-			error: (error) => {
-				console.error(error);
+		const employee: Employee = this.formGroup.value as Employee;
+		this.employeeService.createEmployee().mutate(employee, {
+			onSuccess: () => {
+				this.router.navigate(['/']);
 			},
 		});
 	}
