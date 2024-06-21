@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, Input, numberAttribute } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
@@ -17,34 +17,33 @@ import { Router } from '@angular/router';
 	styles: ``,
 })
 export class EditEmployeeComponent {
-	id = input<number>();
+	@Input({ transform: numberAttribute }) id = 0;
+
 	fb = inject(FormBuilder);
 	employeeService = inject(EmployeeService);
 	router = inject(Router);
 	employees = inject(EmployeeService).getEmployees();
-	employee = computed(() => this.employees().data?.find((employee) => employee?.id === this.id()));
+	employee = computed(() => this.employees().data?.find((employee) => employee?.id === this.id));
 	formGroup = this.fb.group({
 		id: this.fb.control<number | null>(null),
 		firstName: this.fb.control(''),
 		lastName: this.fb.control(''),
 		email: this.fb.control(''),
 		phone: this.fb.control(''),
-		age: this.fb.control(null),
+		age: this.fb.control<number | null>(null),
 	});
 
 	constructor() {
 		effect(() => {
 			if (this.employee()) {
-				// @ts-ignore
-				this.formGroup.patchValue(this.employee());
+				this.formGroup.patchValue(this.employee() as Partial<Employee>);
 			}
 		});
 	}
 
 	updateEmployee() {
 		if (this.formGroup.invalid) return;
-		// @ts-ignore
-		const employee: Employee = this.formGroup.value;
+		const employee = this.formGroup.value as Employee;
 
 		this.employeeService.updateEmployee(employee).subscribe({
 			next: (_result) => {

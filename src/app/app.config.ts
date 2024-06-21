@@ -33,8 +33,8 @@ export const appConfig: ApplicationConfig = {
 		provideQueryClientOptions({
 			defaultOptions: {
 				queries: {
-					refetchOnWindowFocus: false,
-					refetchOnMount: false,
+					refetchOnWindowFocus: true,
+					refetchOnMount: true,
 					refetchOnReconnect: true,
 					staleTime: 600000,
 				},
