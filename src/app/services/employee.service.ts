@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Employee } from '../types/employee';
 import { injectMutation, injectQuery, injectQueryClient } from '@ngneat/query';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
@@ -21,27 +22,21 @@ export class EmployeeService {
 		}).result;
 	}
 
-	createEmployee() {
-		return this.mutation({
-			mutationFn: (employee) => this.httpClient.post<Employee>(`http://localhost:3000/employees`, employee),
-			onSuccess: () => {
-				this.router.navigate(['/']);
-			},
-		});
-		/*return this.httpClient
-			.post<Employee>('http://localhost:3000/employees', employee)
-			.pipe(tap((newEmployee) => this.queryClient.setQueryData(['employees'], (old) => [...old, newEmployee])));*/
+	createEmployee(employee: Employee) {
+		return this.httpClient.post<Employee>('http://localhost:3000/employees', employee).pipe(
+			tap((newEmployee) => {
+				this.queryClient.setQueriesData(
+					{
+						queryKey: ['employees'],
+					},
+					(old: Employee[] | undefined) => [...(old || []), newEmployee]
+				);
+			})
+		);
 	}
 
-	updateEmployee() {
-		return this.mutation({
-			mutationFn: (employee: Employee) => this.httpClient.put<Employee>(`http://localhost:3000/employees/${employee.id}`, employee),
-			onSuccess: () => {
-				this.router.navigate(['/']);
-			},
-		});
-
-		/*return this.httpClient.put<Employee>(`http://localhost:3000/employees/${employee.id}`, employee).pipe(
+	updateEmployee(employee: Employee) {
+		return this.httpClient.put<Employee>(`http://localhost:3000/employees/${employee.id}`, employee).pipe(
 			tap((newEmployee) =>
 				this.queryClient.setQueriesData(
 					{
@@ -50,6 +45,6 @@ export class EmployeeService {
 					(old: Employee[] | undefined) => old?.map((e) => (e.id === newEmployee.id ? newEmployee : e))
 				)
 			)
-		);*/
+		);
 	}
 }

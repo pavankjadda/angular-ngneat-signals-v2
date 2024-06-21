@@ -21,7 +21,7 @@ export class AddEmployeeComponent {
 	router = inject(Router);
 	employeeService = inject(EmployeeService);
 	formGroup = this.fb.group({
-		id: this.fb.control(Math.floor(Math.random() * 100000)),
+		id: this.fb.control(Math.floor(Math.random() * 100000).toString()),
 		firstName: this.fb.control(''),
 		lastName: this.fb.control(''),
 		email: this.fb.control(''),
@@ -32,10 +32,8 @@ export class AddEmployeeComponent {
 	createEmployee() {
 		if (this.formGroup.invalid) return;
 		const employee: Employee = this.formGroup.value as Employee;
-		this.employeeService.createEmployee().mutate(employee, {
-			onSuccess: () => {
-				this.router.navigate(['/']);
-			},
+		this.employeeService.createEmployee(employee).subscribe((_result) => {
+			this.router.navigate(['/']);
 		});
 	}
 }

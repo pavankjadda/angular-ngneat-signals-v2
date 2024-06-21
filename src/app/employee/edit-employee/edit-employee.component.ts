@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, Input, numberAttribute } from '@angular/core';
+import { Component, computed, effect, inject, input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
@@ -17,14 +17,14 @@ import { Router } from '@angular/router';
 	styles: ``,
 })
 export class EditEmployeeComponent {
-	@Input({ transform: numberAttribute }) id = 0;
+	id = input<string>();
 	fb = inject(FormBuilder);
 	employeeService = inject(EmployeeService);
 	router = inject(Router);
 	employees = inject(EmployeeService).getEmployees();
-	employee = computed(() => this.employees().data?.find((employee) => employee?.id === this.id));
+	employee = computed(() => this.employees().data?.find((employee) => employee?.id === this.id()));
 	formGroup = this.fb.group({
-		id: this.fb.control<number | null>(null),
+		id: this.fb.control(''),
 		firstName: this.fb.control(''),
 		lastName: this.fb.control(''),
 		email: this.fb.control(''),
@@ -43,6 +43,8 @@ export class EditEmployeeComponent {
 	updateEmployee() {
 		if (this.formGroup.invalid) return;
 		const employee = this.formGroup.value as Employee;
-		this.employeeService.updateEmployee().mutate(employee);
+		this.employeeService.updateEmployee(employee).subscribe((_result) => {
+			this.router.navigate(['/']);
+		});
 	}
 }
